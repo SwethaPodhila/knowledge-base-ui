@@ -4,52 +4,42 @@ import Button from "./Button";
 const Modal = ({ setOpen }) => {
     const [name, setName] = useState("");
     const [desc, setDesc] = useState("");
-
     const [errors, setErrors] = useState({});
     const [success, setSuccess] = useState("");
 
     const handleSubmit = () => {
         let newErrors = {};
 
-        if (!name.trim()) {
-            newErrors.name = "Name is required";
-        }
+        if (!name.trim()) newErrors.name = "Name is required";
+        if (!desc.trim()) newErrors.desc = "Description is required";
 
-        if (!desc.trim()) {
-            newErrors.desc = "Description is required";
-        }
-
-        // If validation fails
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             setSuccess("");
             return;
         }
 
-        // Success
         setErrors({});
         setSuccess("Successfully created your knowledge base ✅");
 
-        console.log({ name, desc });
-
-        // Auto close after 2 sec
         setTimeout(() => {
             setOpen(false);
         }, 2000);
     };
 
     return (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-md flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-md flex justify-center items-center z-50 px-3">
 
-            <div className="w-[440px] rounded-3xl p-[1px] bg-gradient-to-r from-indigo-500 to-purple-500 shadow-2xl">
+            {/* Container */}
+            <div className="w-full max-w-md sm:max-w-lg rounded-2xl sm:rounded-3xl p-[1px] bg-gradient-to-r from-indigo-500 to-purple-500 shadow-2xl">
 
-                <div className="bg-white rounded-3xl p-6">
+                <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 max-h-[90vh] overflow-y-auto">
 
                     {/* Header */}
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-1">
+                    <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-1">
                         Create Knowledge Base
                     </h2>
-                    <p className="text-sm text-gray-500 mb-5">
+                    <p className="text-xs sm:text-sm text-gray-500 mb-4 sm:mb-5">
                         Organize your data smartly 🚀
                     </p>
 
@@ -58,7 +48,7 @@ const Modal = ({ setOpen }) => {
 
                         {/* Name */}
                         <div>
-                            <label className="text-sm font-medium text-gray-600">
+                            <label className="text-xs sm:text-sm font-medium text-gray-600">
                                 Name
                             </label>
                             <input
@@ -68,10 +58,10 @@ const Modal = ({ setOpen }) => {
                                     setErrors((prev) => ({ ...prev, name: "" }));
                                 }}
                                 placeholder="Enter name..."
-                                className="w-full mt-1 border border-gray-200 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                className="w-full mt-1 border border-gray-200 p-2 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             />
                             {errors.name && (
-                                <p className="text-red-500 text-sm mt-1">
+                                <p className="text-red-500 text-xs sm:text-sm mt-1">
                                     {errors.name}
                                 </p>
                             )}
@@ -79,7 +69,7 @@ const Modal = ({ setOpen }) => {
 
                         {/* Description */}
                         <div>
-                            <label className="text-sm font-medium text-gray-600">
+                            <label className="text-xs sm:text-sm font-medium text-gray-600">
                                 Description
                             </label>
                             <textarea
@@ -89,10 +79,10 @@ const Modal = ({ setOpen }) => {
                                     setErrors((prev) => ({ ...prev, desc: "" }));
                                 }}
                                 placeholder="Write something..."
-                                className="w-full mt-1 border border-gray-200 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                className="w-full mt-1 border border-gray-200 p-2 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                             />
                             {errors.desc && (
-                                <p className="text-red-500 text-sm mt-1">
+                                <p className="text-red-500 text-xs sm:text-sm mt-1">
                                     {errors.desc}
                                 </p>
                             )}
@@ -100,10 +90,10 @@ const Modal = ({ setOpen }) => {
 
                         {/* Dropdowns */}
                         <div>
-                            <label className="text-sm font-medium text-gray-600">
+                            <label className="text-xs sm:text-sm font-medium text-gray-600">
                                 Vector Database
                             </label>
-                            <select className="w-full mt-1 border border-gray-200 p-2 rounded-lg">
+                            <select className="w-full mt-1 border border-gray-200 p-2 text-sm rounded-lg">
                                 <option>Qdrant</option>
                                 <option>Pinecone</option>
                                 <option>Weaviate</option>
@@ -113,10 +103,10 @@ const Modal = ({ setOpen }) => {
                         </div>
 
                         <div>
-                            <label className="text-sm font-medium text-gray-600">
+                            <label className="text-xs sm:text-sm font-medium text-gray-600">
                                 Embedding Model
                             </label>
-                            <select className="w-full mt-1 border border-gray-200 p-2 rounded-lg">
+                            <select className="w-full mt-1 border border-gray-200 p-2 text-sm rounded-lg">
                                 <option>text-embedding-ada-002</option>
                                 <option>text-embedding-3-small</option>
                                 <option>text-embedding-3-large</option>
@@ -125,16 +115,17 @@ const Modal = ({ setOpen }) => {
                             </select>
                         </div>
 
-                        {/* Success Message */}
+                        {/* Success */}
                         {success && (
-                            <p className="text-green-600 text-sm font-medium mt-2">
+                            <p className="text-green-600 text-xs sm:text-sm font-medium">
                                 {success}
                             </p>
                         )}
                     </div>
 
                     {/* Footer */}
-                    <div className="flex justify-between items-center mt-6">
+                    <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mt-5 sm:mt-6">
+
                         <button
                             onClick={() => setOpen(false)}
                             className="text-sm text-gray-500 hover:text-gray-700"
@@ -142,7 +133,7 @@ const Modal = ({ setOpen }) => {
                             Cancel
                         </button>
 
-                        <Button onClick={handleSubmit}>
+                        <Button onClick={handleSubmit} className="w-full sm:w-auto">
                             Create →
                         </Button>
                     </div>
